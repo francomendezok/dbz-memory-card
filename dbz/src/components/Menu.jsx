@@ -1,6 +1,6 @@
 import background from '../assets/gohan-ssj2.webp'
 import background2 from '../assets/chamber.gif'
-import background3 from '../assets/vegeta-rain.gif'
+import background3 from '../assets/vegeta.gif'
 import logo from '../assets/logo.png'
 import { useState, useEffect } from 'react';
 
@@ -16,7 +16,7 @@ export default function Menu() {
         const newIndex = (backgrounds.indexOf(prevBgc) + 1) % backgrounds.length;
         return backgrounds[newIndex];
       });
-    }, 3000);
+    }, 10000);
 
     return () => {
       // Limpiar el intervalo cuando el componente se desmonte para evitar fugas de memoria
