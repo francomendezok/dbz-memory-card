@@ -28,6 +28,16 @@ export default function Menu() {
     <div className="relative h-screen">
       <img className="absolute inset-0 w-full h-full object-cover z-0" src={bgc} alt="" />
       <img className="relative h-1/2 w-1/2 z-10 mx-auto" src={logo} alt="" />
+      
+      <footer className='relative w-screen flex justify-between'>
+        <div className='volumeContainer flex justify-around w-1/5'>
+          <button className='rounded-full p-4 bg-orange-500'>🔊</button>
+          <button className='rounded-full p-4 bg-orange-500'>🎶</button>
+        </div>
+        <div className='instructionsContainer mr-12'>
+          <button className='rounded-full p-4 bg-orange-500'>📜</button>
+        </div>
+      </footer>
     </div>
   );
 }
