@@ -1,4 +1,4 @@
-import cloud from '../assets/kame.gif'
+import cloud from '../assets/goku-vs-vegeta.gif'
 
 
 export default function Loading () {
