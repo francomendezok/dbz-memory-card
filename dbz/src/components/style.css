@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Saiyan';
+    src: url('../assets/Saiyan-Sans.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    color: white !important;
+  }
+
+  @keyframes rebote {
+    0%, 40%, 80% {
+      transform: translateX(0);
+    }
+    20%, 60% {
+      transform: translateX(40px);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+
+  .clickToPlay {
+    animation: rebote 2s infinite;
+  }
+
+body, html {
+  overflow-y: hidden;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+  transform: translateY(100%);
+}
+
+.visible {
+  display: flex;
+  animation: show 0.5s ease-out;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

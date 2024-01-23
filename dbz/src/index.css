@@ -1,8 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-.bgc-div {
-    background-image: url('./assets/bgc.jpg');
-}
