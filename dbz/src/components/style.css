@@ -48,3 +48,21 @@ body, html {
     transform: translateY(0);
   }
 }
+
+/* Agrega estas reglas a tu archivo de estilos */
+@keyframes danceAnimation {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(20px); /* Ajusta la distancia que quieres que se mueva */
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.dancing {
+  animation: danceAnimation 1s ease-in-out infinite; /* Ajusta la duración y el tipo de easing según tus preferencias */
+}
+

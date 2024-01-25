@@ -6,12 +6,62 @@ import logo from '../assets/logo.png'
 import play from '../assets/4.png'
 import bulma from '../assets/bulma.webp'
 import click from '../assets/click.png'
+import audio from '../assets/music.mp3'
+import disco from '../assets/vinil.webp'
+import confuso from '../assets/confuso.webp'
 import './style.css'
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 
 const backgrounds = [background, background2, background3]
+
+const AudioPlayer = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const handlePlayPause = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  useEffect(() => {
+    const imgElement = document.getElementById('dancingImage');
+    if (imgElement) {
+      if (isPlaying) {
+        imgElement.classList.add('dancing'); // Añade la clase cuando está reproduciéndose
+      } else {
+        imgElement.classList.remove('dancing'); // Elimina la clase cuando está pausado
+      }
+    }
+  }, [isPlaying]);
+
+
+  return (
+    <div className='flex w-1/2'>
+      <img 
+      onClick={handlePlayPause} 
+      id='dancingImage'
+      className={`h-44 w-44 hover:scale-110 cursor-pointer ${isPlaying ? 'dancing' : ''}`} 
+      src={disco} 
+      alt="Goku Vinyl"
+       />
+      <div className='hidden'>
+        <audio ref={audioRef} autoPlay controls>
+          <source src={audio} type="audio/mp3" />
+        </audio>
+        <button onClick={handlePlayPause}>
+          {isPlaying ? 'Pausar' : 'Reproducir'}
+        </button>
+      </div>
+    </div>
+  );
+};
+
 
 
 export default function Menu() {
@@ -39,28 +89,24 @@ export default function Menu() {
   return (
 <div className="relative min-h-screen flex flex-col">
   <img className="absolute inset-0 w-full h-full object-cover z-0" src={bgc} alt="" />
-  <img className="relative h-1/2 w-1/2 z-10 mx-auto" src={logo} alt="" />
+  <img className="relative h-1/2 w-1/2 z-10 bottom-24 mx-auto" src={logo} alt="" />
   
-  <div className="relative z-0 w-1/3 h-32 flex justify-center gap-12 items-center m-auto -mt-24">
+  <div className="relative z-0 w-1/3 h-32 bottom-24 flex justify-center gap-12 items-center m-auto -mt-24">
     <img className="clickToPlay" src={click} alt="" />
-    {/* <h1 style={{fontFamily: 'Saiyan'}} className='clickToPlay text-4xl text-black p-2 font-bold bg-white rounded-full'>Click the Dragon ball to Play!</h1> */}
     <img className='hover:scale-110 cursor-pointer w-24' src={play} alt="" />
   </div>
   
-  <footer className='relative w-screen h-24 flex justify-between mt-auto'>
-    <div className='volumeContainer flex justify-around w-1/5'>
-      <button className='text-2xl hover:scale-110 rounded-full p-6 bg-slate-100 flex items-center h-12 m-auto'>🔊</button>
-      <button className='text-2xl hover:scale-110 rounded-full p-6 bg-slate-100 flex items-center h-12 m-auto'>🎶</button>
-    </div>
+  <footer className='relative w-screen h-44 flex justify-between mt-auto'>
+    <AudioPlayer/>
     <div className='instructionsContainer flex mr-10'>
-    <div className={`relative bottom-48 flex h-72 w-3/4 ${bulmaState}`}>
-        <img className='w-full h-full' src={bulma} alt="" />
+      <div className={`relative bottom-32 flex h-72 w-3/4 ${bulmaState}`}>
+        <img className='w-1/2 h-full' src={bulma} alt="" />
         <div className='h-3/4 flex flex-col justify-evenly'>
           <p className='font-semibold rounded-lg p-2 bg-slate-200 text-center'>Don't click on the same card twice!</p>
           <p className='font-semibold rounded-lg p-2 bg-slate-200 text-center'>Click on the DBZ logo to go back.</p>
         </div>
       </div>
-      <button onClick={handleBulma} className='text-2xl hover:scale-110 rounded-full p-6 bg-slate-100 h-12 flex items-center m-auto'>📜</button>
+      <img className='mb-8 cursor-pointer hover:scale-110 ease-in-out' onClick={handleBulma} src={confuso} alt="" />    
     </div>
   </footer>
 </div>
