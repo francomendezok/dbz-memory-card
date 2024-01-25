@@ -46,12 +46,12 @@ const AudioPlayer = () => {
       <img 
       onClick={handlePlayPause} 
       id='dancingImage'
-      className={`h-44 w-44 hover:scale-110 cursor-pointer ${isPlaying ? 'dancing' : ''}`} 
+      className={`mt-auto h-32 w-32 hover:scale-110 cursor-pointer ${isPlaying ? 'dancing' : ''}`} 
       src={disco} 
       alt="Goku Vinyl"
        />
       <div className='hidden'>
-        <audio ref={audioRef} autoPlay controls>
+        <audio ref={audioRef} controls>
           <source src={audio} type="audio/mp3" />
         </audio>
         <button onClick={handlePlayPause}>
@@ -67,9 +67,16 @@ const AudioPlayer = () => {
 export default function Menu() {
   const [bgc, setBgc] = useState(backgrounds[0]);
   const [bulmaState, setBulmaState] = useState('hidden')
+  const [logoState, setLogoState] = useState(true)
+  const [chooseLevel, setChooseLevel] = useState(false)
 
   function handleBulma () {
     bulmaState === 'hidden' ? setBulmaState('visible') : setBulmaState('hidden')
+  }
+
+  function playGame () {
+    setChooseLevel(true)
+    setLogoState(false)
   }
 
   useEffect(() => {
@@ -89,11 +96,17 @@ export default function Menu() {
   return (
 <div className="relative min-h-screen flex flex-col">
   <img className="absolute inset-0 w-full h-full object-cover z-0" src={bgc} alt="" />
-  <img className="relative h-1/2 w-1/2 z-10 bottom-24 mx-auto" src={logo} alt="" />
+  <img className={`cursor-pointer relative h-1/2 w-1/2 z-10 bottom-24 mx-auto ${logoState ? '' : 'bottom-2 right-1/3 h-1/5 w-1/5'}`} src={logo} alt="" />
   
-  <div className="relative z-0 w-1/3 h-32 bottom-24 flex justify-center gap-12 items-center m-auto -mt-24">
+  <div className={`relative z-0 w-1/3 h-32 bottom-24 flex justify-center gap-12 items-center m-auto ${logoState ? '' : 'hidden'}`}>
     <img className="clickToPlay" src={click} alt="" />
-    <img className='hover:scale-110 cursor-pointer w-24' src={play} alt="" />
+    <img onClick={playGame} id='dragonBall' className='hover:scale-110 cursor-pointer w-24' src={play} alt="" />
+  </div>
+
+  <div className={`relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel ? 'hidden' : ''}`}>
+    <button style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-green-800 text-white shadow-lg cursor-pointer hover:scale-110'>Easy</button>
+    <button style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-orange-800 text-white shadow-lg cursor-pointer hover:scale-110'>Medium</button>
+    <button style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-red-800 text-white shadow-lg cursor-pointer hover:scale-110'>Hard</button>
   </div>
   
   <footer className='relative w-screen h-44 flex justify-between mt-auto'>
@@ -106,7 +119,7 @@ export default function Menu() {
           <p className='font-semibold rounded-lg p-2 bg-slate-200 text-center'>Click on the DBZ logo to go back.</p>
         </div>
       </div>
-      <img className='mb-8 cursor-pointer hover:scale-110 ease-in-out' onClick={handleBulma} src={confuso} alt="" />    
+      <img className='h-32 mt-auto mb-2 cursor-pointer hover:scale-110 ease-in-out' onClick={handleBulma} src={confuso} alt="" />    
     </div>
   </footer>
 </div>

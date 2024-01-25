@@ -66,3 +66,8 @@ body, html {
   animation: danceAnimation 1s ease-in-out infinite; /* Ajusta la duración y el tipo de easing según tus preferencias */
 }
 
+
+.cornerLogo {
+  width: 30px !important;
+}
+
