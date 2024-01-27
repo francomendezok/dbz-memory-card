@@ -194,6 +194,8 @@ function Menu () {
   );
 }
 
+// Set show Game with difficulty, 5, 7, or 10 cards. Add score board
+
 
 export {AudioPlayer, Bulma, AppDBZ, Footer, Menu}
 
