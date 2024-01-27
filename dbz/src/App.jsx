@@ -1,12 +1,16 @@
 import Loading from "./components/loading"
-import Menu from "./components/Menu"
+import { Menu, Footer, AppDBZ } from "./components/Menu"
+import { useState } from "react"
 
-export function App () {
+export function App() {
+
   return (
+    <>
+      <AppDBZ />
       <Menu />
-  )
-}
- 
+    </>
+  );
+      }
 
 
 

@@ -71,3 +71,12 @@ body, html {
   width: 30px !important;
 }
 
+
+.space {
+  background-image: url('../assets/space.jpg');
+}
+
+.shenron {
+  width: 50%;
+  height: 50%;
+}
