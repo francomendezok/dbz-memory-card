@@ -10,7 +10,6 @@ import audio from '../assets/music.mp3'
 import disco from '../assets/vinil.webp'
 import confuso from '../assets/confuso.webp'
 import card from '../assets/card.jpg'
-import space from '../assets/space.jpg'
 import './style.css'
 import { useState, useEffect, useRef } from 'react';
 
@@ -103,8 +102,6 @@ const AppDBZ = () => {
 
     fetchData();
   }, []);
-
-  console.log(characters);
 };
 
 function Footer () {
@@ -116,11 +113,12 @@ function Footer () {
   )
 }
 
-function Game () {
+function Game ({quantity}) {
   const imageElements = [];
 
+
   // Usar un bucle for para generar dinámicamente los elementos <img>
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < quantity; i++) {
     const key = `card-${i}`;
 
     // Agregar cada elemento <img> al array
@@ -128,21 +126,26 @@ function Game () {
   }
 
   return (
-      <div className='space absolute w-screen h-screen flex items-center justify-center'>
-          <div id='cards' className='flex items-center justify-center w-3/4 h-3/4 border-4 border-red-700 gap-8'>
-            {imageElements}
+    <div className='space absolute w-screen h-screen flex items-center justify-center'>
+      <div id='cards' className='flex items-center justify-center w-full h-2/4'>
+        {imageElements.map((image, index) => (
+          <div key={index} className='w-1/4 flex justify-center'> 
+            {image}
           </div>
+        ))}
+        <h1 className='absolute bottom-32 text-4xl text-slate-100'> 0 / {quantity}</h1>
       </div>
-  )
+    </div>
+  );
+  
 }
-
 
 function Menu () {
   const [bgc, setBgc] = useState(backgrounds[0]);
   const [logoState, setLogoState] = useState(true)
   const [chooseLevel, setChooseLevel] = useState(false)
   const [showGame, setShowGame] = useState(false)
-
+  const [quantity, setQuantity] = useState(1)
 
   function playGame () {
     setChooseLevel(true)
@@ -153,6 +156,11 @@ function Menu () {
     setChooseLevel(false)
     setLogoState(true)
     setShowGame(false)
+  }
+
+  function printCards (number) {
+    setQuantity(number)
+    setShowGame(true)
   }
 
   useEffect(() => {
@@ -179,12 +187,12 @@ function Menu () {
         <img onClick={playGame} id='dragonBall' className={`hover:scale-110 cursor-pointer w-24 ${showGame ? 'hidden' : ''}`} src={play} alt="" />
       </div>
 
-      {showGame ? <Game/> : ''}
+      {showGame ? <Game quantity={quantity}/> : ''}
 
       <div className={`relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel || showGame ? 'hidden' : ''}`}>
-        <button onClick={() => setShowGame(true)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-green-800 text-white shadow-lg cursor-pointer hover:scale-110'>Easy</button>
-        <button onClick={() => setShowGame(true)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-orange-800 text-white shadow-lg cursor-pointer hover:scale-110'>Medium</button>
-        <button onClick={() => setShowGame(true)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-red-800 text-white shadow-lg cursor-pointer hover:scale-110'>Hard</button>
+        <button onClick={() => printCards(5)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-green-800 text-white shadow-lg cursor-pointer hover:scale-110'>Easy</button>
+        <button onClick={() => printCards(7)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-orange-800 text-white shadow-lg cursor-pointer hover:scale-110'>Medium</button>
+        <button onClick={() => printCards(10)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-red-800 text-white shadow-lg cursor-pointer hover:scale-110'>Hard</button>
       </div>
       
       <Footer />

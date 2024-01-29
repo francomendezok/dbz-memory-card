@@ -77,6 +77,11 @@ body, html {
 }
 
 .shenron {
-  width: 50%;
-  height: 50%;
+  width: 90%;
+  height: 90%;
+  cursor: pointer;
+}
+
+.shenron:hover {
+  transform: rotateX(10deg) rotateY(10deg); /* ajusta según sea necesario para la inclinación deseada */
 }
