@@ -1,10 +1,9 @@
-import { Menu, Footer, AppDBZ } from "./components/Menu"
+import { Menu } from "./components/Menu"
 
 export function App() {
 
   return (
     <>
-      <AppDBZ />
       <Menu />
     </>
   );

@@ -81,30 +81,6 @@ const Bulma = () => {
   )
 }
 
-const AppDBZ = () => {
-  const [characters, setCharacters] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://dragonball-api.com/api/characters?page=1&limit=58');
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const data = await response.json();
-        setCharacters(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-  console.log(characters);
-};
-
 function Footer () {
   return (
     <footer className='relative w-screen h-44 flex justify-between mt-auto'>
@@ -114,16 +90,30 @@ function Footer () {
   )
 }
 
+const fetchData = async () => {
+  try {
+    const response = await fetch('https://dragonball-api.com/api/characters?page=1&limit=58');
+    
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
 function Game ({quantity}) {
   const imageElements = [];
-
-
-  // Usar un bucle for para generar dinámicamente los elementos <img>
-  for (let i = 0; i < quantity; i++) {
+  const random = randomCharacters(quantity)
+    for (let i = 0; i < quantity; i++) {
     const key = `card-${i}`;
 
     // Agregar cada elemento <img> al array
-    imageElements.push(<img className='shenron' key={key} src={card} alt={`Card ${i + 1}`} />);
+    imageElements.push(<img className='shenron' key={key} src={random[i].image} alt={`Card ${i + 1}`} />);
   }
 
   return (
@@ -141,12 +131,35 @@ function Game ({quantity}) {
   
 }
 
+function randomCharacters (amount) {
+  let positions = []
+
+  for (let i = 0; i < amount; i++) {
+    let index = Math.floor(Math.random() * 59); 
+    // if (!positions.includes(characters.items[index])) 
+    positions.push(characters.items[index])
+    // else {
+    //     while (positions.includes(characters.items[index])) {
+    //       let index = Math.floor(Math.random() * 59);
+    //       positions.push(characters.items[index])
+    //   }
+    // }
+  }
+  console.log(positions);
+  return positions;
+}
+
+const characters = await fetchData();
+
+
 function Menu () {
   const [bgc, setBgc] = useState(backgrounds[0]);
   const [logoState, setLogoState] = useState(true)
   const [chooseLevel, setChooseLevel] = useState(false)
   const [showGame, setShowGame] = useState(false)
   const [quantity, setQuantity] = useState(1)
+
+
 
   function playGame () {
     setChooseLevel(true)
@@ -188,7 +201,7 @@ function Menu () {
         <img onClick={playGame} id='dragonBall' className={`hover:scale-110 cursor-pointer w-24 ${showGame ? 'hidden' : ''}`} src={play} alt="" />
       </div>
 
-      {showGame ? <Game quantity={quantity}/> : ''}
+      {showGame ? <Game quantity={quantity} /> : ''}
 
       <div className={`relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel || showGame ? 'hidden' : ''}`}>
         <button onClick={() => printCards(5)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-green-800 text-white shadow-lg cursor-pointer hover:scale-110'>Easy</button>
@@ -203,10 +216,8 @@ function Menu () {
   );
 }
 
-// Set show Game with difficulty, 5, 7, or 10 cards. Add score board
 
-
-export {AudioPlayer, Bulma, AppDBZ, Footer, Menu}
+export {Menu}
 
 
 
