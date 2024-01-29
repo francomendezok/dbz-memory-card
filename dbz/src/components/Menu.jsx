@@ -102,6 +102,7 @@ const AppDBZ = () => {
 
     fetchData();
   }, []);
+  console.log(characters);
 };
 
 function Footer () {
