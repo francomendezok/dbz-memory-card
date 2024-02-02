@@ -10,6 +10,7 @@ import audio from '../assets/music.mp3'
 import disco from '../assets/vinil.webp'
 import confuso from '../assets/confuso.webp'
 import card from '../assets/card.jpg'
+import space from '../assets/space.jpg'
 import './style.css'
 import { useState, useEffect, useRef } from 'react';
 
@@ -107,20 +108,24 @@ const fetchData = async () => {
 };
 
 function Game ({quantity}) {
+
+  function setCardClass () {
+    setCardState('shenron')
+  }
+  const [cardState, setCardState] = useState('dbz-character')
   const imageElements = [];
   const random = randomCharacters(quantity)
     for (let i = 0; i < quantity; i++) {
     const key = `card-${i}`;
 
-    // Agregar cada elemento <img> al array
-    imageElements.push(<img className='shenron' key={key} src={random[i].image} alt={`Card ${i + 1}`} />);
+    imageElements.push(<img onClick={setCardClass} className={cardState} key={key} src={random[i].image} alt={`Card ${i + 1}`} />);
   }
 
   return (
     <div className='space absolute w-screen h-screen flex items-center justify-center'>
       <div id='cards' className='flex items-center justify-center w-full h-2/4'>
         {imageElements.map((image, index) => (
-          <div key={index} className='w-1/4 flex justify-center'> 
+          <div key={index} className='cardCharacter bg-black w-1/4 h-full m-2 flex justify-center border-2 border-slate-500 rounded-lg'> 
             {image}
           </div>
         ))}
@@ -131,29 +136,34 @@ function Game ({quantity}) {
   
 }
 
-function randomCharacters (amount) {
-  let positions = []
+function randomCharacters(amount) {
+  let positions = [];
+  let selectedIndexes = new Set();
 
-  for (let i = 0; i < amount; i++) {
-    let index = Math.floor(Math.random() * 59); 
-    // if (!positions.includes(characters.items[index])) 
-    positions.push(characters.items[index])
-    // else {
-    //     while (positions.includes(characters.items[index])) {
-    //       let index = Math.floor(Math.random() * 59);
-    //       positions.push(characters.items[index])
-    //   }
-    // }
+  while (positions.length < amount) {
+    let index = Math.floor(Math.random() * 59);
+
+    // Verificar si el índice ya fue seleccionado
+    if (!selectedIndexes.has(index)) {
+      selectedIndexes.add(index);
+      positions.push(characters.items[index]);
+    }
   }
-  console.log(positions);
-  return positions;
+
+  // Convertir el Set a un array
+  let positionsArray = [...positions];
+
+  return positionsArray;
 }
+
+
 
 const characters = await fetchData();
 
 
 function Menu () {
-  const [bgc, setBgc] = useState(backgrounds[0]);
+  const randomNumber = Math.floor(Math.random() * 3);
+  const [bgc, setBgc] = useState(backgrounds[randomNumber]);
   const [logoState, setLogoState] = useState(true)
   const [chooseLevel, setChooseLevel] = useState(false)
   const [showGame, setShowGame] = useState(false)
@@ -168,32 +178,21 @@ function Menu () {
 
   function showMenu () {
     setChooseLevel(false)
+    setBgc(backgrounds[randomNumber])
     setLogoState(true)
     setShowGame(false)
   }
 
   function printCards (number) {
     setQuantity(number)
+    setBgc(space)
     setShowGame(true)
   }
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setBgc((prevBgc) => {
-        const newIndex = (backgrounds.indexOf(prevBgc) + 1) % backgrounds.length;
-        return backgrounds[newIndex];
-      });
-    }, 10000);
-
-    return () => {
-      // Limpiar el intervalo cuando el componente se desmonte para evitar fugas de memoria
-      clearInterval(intervalId);
-    };
-  }, []); // El array vacío como segundo argumento asegura que el efecto se ejecute solo una vez al montar el componente
 
   return (
     <div className={`relative min-h-screen flex flex-col`}>
-      <img className={`absolute inset-0 w-full h-full object-cover z-0 ${showGame ? 'hidden' : ''}`} src={bgc} alt="" />
+      <img className={`absolute inset-0 w-full h-full object-cover z-0`} src={bgc} alt="" />
       <img onClick={showMenu} className={`cursor-pointer relative h-1/2 w-1/2 z-10 bottom-24 mx-auto ${logoState ? '' : 'top-2 right-1/3 h-1/5 w-1/5'}`} src={logo} alt="" />
       
       <div className={`relative z-0 w-1/3 h-32 bottom-24 flex justify-center gap-12 items-center m-auto ${logoState || showGame ? '' : 'hidden'}`}>
