@@ -108,17 +108,35 @@ const fetchData = async () => {
 };
 
 function Game ({quantity}) {
-
-  function setCardClass () {
-    setCardState('shenron')
+  const arr = [];
+  
+  function manageCard (position) {
+    if (arr.includes(position)) alert('You Lose')
+    else {
+      arr.push(position)
+    }
   }
+
+// Función de comparación para ordenar al azar
+function comparacionAzar() {
+  return Math.random() - 0.5;
+}
+
+// Tu array
+let easy = [0,1,2,3,4]
+let medium = [0,1,2,3,4,5,6]
+let hard = [0,1,2,3,4,5,6,7,8,9]
+// Sort random, not external indexes // 
+
+  const [indexes, setIndexes] = useState(easy)
   const [cardState, setCardState] = useState('dbz-character')
   const imageElements = [];
   const random = randomCharacters(quantity)
+  console.log(random, random.sort(comparacionAzar));
     for (let i = 0; i < quantity; i++) {
     const key = `card-${i}`;
 
-    imageElements.push(<img onClick={setCardClass} className={cardState} key={key} src={random[i].image} alt={`Card ${i + 1}`} />);
+    imageElements.push(<img onClick={() => manageCard(random[i])} className={cardState} key={key} src={random[indexes[i]].image} alt={`Card ${i + 1}`} />);
   }
 
   return (
