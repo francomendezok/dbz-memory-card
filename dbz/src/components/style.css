@@ -83,8 +83,30 @@ body, html {
   cursor: pointer;
 }
 
-.shenron:hover {
-  transform: rotateX(10deg) rotateY(10deg); /* ajusta según sea necesario para la inclinación deseada */
+
+
+.mi-div {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  transform-style: preserve-3d;
+  animation: rotacion 2s linear forwards;
+  background-image: url('../assets/card.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.mi-div img {
+  display: none;
 }
 
 
+@keyframes rotacion {
+  from {
+    transform: rotateY(180deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}

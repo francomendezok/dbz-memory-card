@@ -128,22 +128,29 @@ let medium = [0,1,2,3,4,5,6]
 let hard = [0,1,2,3,4,5,6,7,8,9]
 // Sort random, not external indexes // 
 
-  const [indexes, setIndexes] = useState(easy)
+  function changeClass () {
+    setCardState('mi-div')
+    setTimeout(function() {
+      setCardState('dbz-character')
+    }, 2000);
+  }
+
   const [cardState, setCardState] = useState('dbz-character')
+  const [indexes, setIndexes] = useState(easy)
   const imageElements = [];
   const random = randomCharacters(quantity)
   console.log(random, random.sort(comparacionAzar));
     for (let i = 0; i < quantity; i++) {
     const key = `card-${i}`;
 
-    imageElements.push(<img onClick={() => manageCard(random[i])} className={cardState} key={key} src={random[indexes[i]].image} alt={`Card ${i + 1}`} />);
+    imageElements.push(<img onClick={() => manageCard(random[i])} key={key} src={random[i].image} alt={`Card ${i + 1}`} />);
   }
-
+// Need to check why changes characters all the time, need to stay the same with different positions // 
   return (
     <div className='space absolute w-screen h-screen flex items-center justify-center'>
       <div id='cards' className='flex items-center justify-center w-full h-2/4'>
         {imageElements.map((image, index) => (
-          <div key={index} className='cardCharacter bg-black w-1/4 h-full m-2 flex justify-center border-2 border-slate-500 rounded-lg'> 
+          <div key={index} onClick={changeClass} className={`${cardState} cardCharacter bg-black w-1/4 h-full m-2 flex justify-center border-2 border-slate-500 rounded-lg`}> 
             {image}
           </div>
         ))}
