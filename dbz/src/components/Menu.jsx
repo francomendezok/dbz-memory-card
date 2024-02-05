@@ -9,7 +9,6 @@ import click from '../assets/click.png'
 import audio from '../assets/music.mp3'
 import disco from '../assets/vinil.webp'
 import confuso from '../assets/confuso.webp'
-import card from '../assets/card.jpg'
 import space from '../assets/space.jpg'
 import './style.css'
 import { useState, useEffect, useRef } from 'react';
@@ -100,90 +99,100 @@ const fetchData = async () => {
     }
 
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error('Error fetching data:', error);
   }
 };
 
-function Game ({quantity}) {
-  const arr = [];
-  
-  function manageCard (position) {
-    if (arr.includes(position)) alert('You Lose')
-    else {
-      arr.push(position)
-    }
-  }
 
-// Función de comparación para ordenar al azar
-function comparacionAzar() {
-  return Math.random() - 0.5;
+function Game({ quantity }) {
+  const [characters, setCharacters] = useState([]);
+  const [animationClass, setAnimationClass] = useState('dbz-character');
+  const [selected, setSelected] = useState([]);
+
+  useEffect(() => {
+    const getRandomCharacters = async () => {
+      const charactersData = await randomCharacters(quantity);
+      setCharacters(charactersData);
+    };
+
+    getRandomCharacters();
+  }, [quantity]);
+
+        // Función para generar un número aleatorio entre -10 y 10 (puedes ajustar el rango según tus necesidades)
+function randomIndex () {
+  return Math.floor(Math.random() * 21) - 10;
 }
 
-// Tu array
-let easy = [0,1,2,3,4]
-let medium = [0,1,2,3,4,5,6]
-let hard = [0,1,2,3,4,5,6,7,8,9]
-// Sort random, not external indexes // 
+function manageCard(position) {
+  if (selected.includes(position)) {
+    alert('You Lose');
+  } else {
+    // Hacer una copia del array 'selected' y agregar la nueva posición
+    const selectedCopy = [...selected];
+    selectedCopy.push(position);
+    setSelected(selectedCopy);
 
-  function changeClass () {
-    setCardState('mi-div')
-    setTimeout(function() {
-      setCardState('dbz-character')
+    setAnimationClass('mi-div');
+
+    // Crear una nueva copia del array 'characters' y ordenarla
+    const newPositions = [...characters].sort((a, b) => {
+      const idA = a.id + randomIndex();
+      const idB = b.id + randomIndex();
+
+      return idA - idB;
+    });
+
+    // Actualizar el estado 'characters' con la nueva copia ordenada
+    setCharacters(newPositions);
+
+    setTimeout(function () {
+      setAnimationClass('dbz-character');
     }, 2000);
   }
+}
 
-  const [cardState, setCardState] = useState('dbz-character')
-  const [indexes, setIndexes] = useState(easy)
-  const imageElements = [];
-  const random = randomCharacters(quantity)
-  console.log(random, random.sort(comparacionAzar));
-    for (let i = 0; i < quantity; i++) {
-    const key = `card-${i}`;
 
-    imageElements.push(<img onClick={() => manageCard(random[i])} key={key} src={random[i].image} alt={`Card ${i + 1}`} />);
-  }
-// Need to check why changes characters all the time, need to stay the same with different positions // 
+
+  const imageElements = characters.map((character, index) => (
+    <div
+      key={index}
+      onClick={() => manageCard(character)}
+      className={`${animationClass} cardCharacter bg-black w-1/4 h-full m-2 flex justify-center border-2 border-slate-500 rounded-lg`}
+    >
+      <img src={character.image} alt={`Card ${index + 1}`} />
+    </div>
+  ));
+
   return (
     <div className='space absolute w-screen h-screen flex items-center justify-center'>
       <div id='cards' className='flex items-center justify-center w-full h-2/4'>
-        {imageElements.map((image, index) => (
-          <div key={index} onClick={changeClass} className={`${cardState} cardCharacter bg-black w-1/4 h-full m-2 flex justify-center border-2 border-slate-500 rounded-lg`}> 
-            {image}
-          </div>
-        ))}
+        {imageElements}
         <h1 className='absolute bottom-32 text-4xl text-slate-100'> 0 / {quantity}</h1>
       </div>
     </div>
   );
-  
 }
 
-function randomCharacters(amount) {
+async function randomCharacters(amount) {
+  console.log('executed');
   let positions = [];
   let selectedIndexes = new Set();
 
   while (positions.length < amount) {
     let index = Math.floor(Math.random() * 59);
 
-    // Verificar si el índice ya fue seleccionado
     if (!selectedIndexes.has(index)) {
       selectedIndexes.add(index);
-      positions.push(characters.items[index]);
+      positions.push(fetchedCharacters.items[index]); // Use characters from the state
     }
   }
 
-  // Convertir el Set a un array
-  let positionsArray = [...positions];
-
-  return positionsArray;
+  return positions;
 }
 
-
-
-const characters = await fetchData();
+const fetchedCharacters = await fetchData();
 
 
 function Menu () {
