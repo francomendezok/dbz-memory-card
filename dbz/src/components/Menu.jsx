@@ -110,6 +110,8 @@ function Game({ quantity }) {
   const [characters, setCharacters] = useState([]);
   const [animationClass, setAnimationClass] = useState('dbz-character');
   const [selected, setSelected] = useState([]);
+  const [counter, setCounter] = useState(0)
+
 
   useEffect(() => {
     const getRandomCharacters = async () => {
@@ -120,32 +122,35 @@ function Game({ quantity }) {
     getRandomCharacters();
   }, [quantity]);
 
-        // Función para generar un número aleatorio entre -10 y 10 (puedes ajustar el rango según tus necesidades)
-function randomIndex () {
-  return Math.floor(Math.random() * 21) - 10;
+function randomNumber () {
+  return Math.floor(Math.random() * 100);
 }
 
+
 function manageCard(position) {
-  if (selected.includes(position)) {
-    alert('You Lose');
-  } else {
-    // Hacer una copia del array 'selected' y agregar la nueva posición
+  if (selected.includes(position)) alert('You Lose');
+  
+    else {
     const selectedCopy = [...selected];
     selectedCopy.push(position);
     setSelected(selectedCopy);
 
     setAnimationClass('mi-div');
 
-    // Crear una nueva copia del array 'characters' y ordenarla
-    const newPositions = [...characters].sort((a, b) => {
-      const idA = a.id + randomIndex();
-      const idB = b.id + randomIndex();
+    const randomIndexes = [...characters]
 
-      return idA - idB;
-    });
+    randomIndexes.map(pos => pos.id = randomNumber() )
+  
+    const sortID = () => {
+      const arrayNewPositions = randomIndexes.slice().sort((a, b) => a.id - b.id);
+      return arrayNewPositions;
+    };
 
-    // Actualizar el estado 'characters' con la nueva copia ordenada
-    setCharacters(newPositions);
+    setCharacters(sortID);
+
+    let count = counter
+    count++;
+    setCounter(count)
 
     setTimeout(function () {
       setAnimationClass('dbz-character');
@@ -169,7 +174,7 @@ function manageCard(position) {
     <div className='space absolute w-screen h-screen flex items-center justify-center'>
       <div id='cards' className='flex items-center justify-center w-full h-2/4'>
         {imageElements}
-        <h1 className='absolute bottom-32 text-4xl text-slate-100'> 0 / {quantity}</h1>
+        <h1 className='absolute bottom-32 text-4xl text-slate-100'> {counter} / {quantity}</h1>
       </div>
     </div>
   );
