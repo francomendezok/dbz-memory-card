@@ -105,12 +105,18 @@ const fetchData = async () => {
   }
 };
 
+function Result ({counter, quantity}) {
+    return (
+      <h1>{counter} + {quantity}</h1>
+      // result is not showing // 
+    )
+}
 
-function Game({ quantity }) {
+
+function Game({ counter, setCounter, quantity, setResult, setShowGame }) {
   const [characters, setCharacters] = useState([]);
   const [animationClass, setAnimationClass] = useState('dbz-character');
   const [selected, setSelected] = useState([]);
-  const [counter, setCounter] = useState(0)
 
 
   useEffect(() => {
@@ -128,7 +134,10 @@ function randomNumber () {
 
 
 function manageCard(position) {
-  if (selected.includes(position)) alert('You Lose');
+  if (selected.includes(position)) {
+    setShowGame(false)
+    setResult(true)
+  }
   
     else {
     const selectedCopy = [...selected];
@@ -207,6 +216,8 @@ function Menu () {
   const [chooseLevel, setChooseLevel] = useState(false)
   const [showGame, setShowGame] = useState(false)
   const [quantity, setQuantity] = useState(1)
+  const [result, setResult] = useState(false)
+  const [counter, setCounter] = useState(0)
 
 
 
@@ -239,7 +250,8 @@ function Menu () {
         <img onClick={playGame} id='dragonBall' className={`hover:scale-110 cursor-pointer w-24 ${showGame ? 'hidden' : ''}`} src={play} alt="" />
       </div>
 
-      {showGame ? <Game quantity={quantity} /> : ''}
+      {showGame ? <Game counter={counter} setCounter={setCounter} quantity={quantity} setResult={setResult} setShowGame={setShowGame} /> : ''}
+      {result ? <Result counter={counter} quantity={quantity} /> : ''}
 
       <div className={`relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel || showGame ? 'hidden' : ''}`}>
         <button onClick={() => printCards(5)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-green-800 text-white shadow-lg cursor-pointer hover:scale-110'>Easy</button>
