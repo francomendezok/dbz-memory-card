@@ -105,18 +105,21 @@ const fetchData = async () => {
   }
 };
 
-function Result ({counter, quantity}) {
+function Result ({counter, quantity, state}) {
     return (
-      <h1>{counter} + {quantity}</h1>
+      <h1 className='absolute text-4xl z-50 text-slate-50'>{counter} + {quantity}</h1>
       // result is not showing // 
     )
 }
 
 
-function Game({ counter, setCounter, quantity, setResult, setShowGame }) {
+function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
   const [characters, setCharacters] = useState([]);
   const [animationClass, setAnimationClass] = useState('dbz-character');
   const [selected, setSelected] = useState([]);
+  const [win, setWin] = useState(false)
+  const [lose, setLose] = useState(false)
+
 
 
   useEffect(() => {
@@ -135,8 +138,8 @@ function randomNumber () {
 
 function manageCard(position) {
   if (selected.includes(position)) {
-    setShowGame(false)
-    setResult(true)
+    setHasResult('hidden')
+    setWin(true)
   }
   
     else {
@@ -181,7 +184,9 @@ function manageCard(position) {
 
   return (
     <div className='space absolute w-screen h-screen flex items-center justify-center'>
-      <div id='cards' className='flex items-center justify-center w-full h-2/4'>
+            {win ? <Result counter={counter} quantity={quantity} state={'win'} /> : ''}
+            {lose ? <Result counter={counter} quantity={quantity} state={'lose'} /> : ''}
+      <div id='cards' className={`${hasResult} flex items-center justify-center w-full h-2/4`}>
         {imageElements}
         <h1 className='absolute bottom-32 text-4xl text-slate-100'> {counter} / {quantity}</h1>
       </div>
@@ -190,7 +195,6 @@ function manageCard(position) {
 }
 
 async function randomCharacters(amount) {
-  console.log('executed');
   let positions = [];
   let selectedIndexes = new Set();
 
@@ -216,8 +220,8 @@ function Menu () {
   const [chooseLevel, setChooseLevel] = useState(false)
   const [showGame, setShowGame] = useState(false)
   const [quantity, setQuantity] = useState(1)
-  const [result, setResult] = useState(false)
   const [counter, setCounter] = useState(0)
+  const [hasResult, setHasResult] = useState('')
 
 
 
@@ -250,8 +254,7 @@ function Menu () {
         <img onClick={playGame} id='dragonBall' className={`hover:scale-110 cursor-pointer w-24 ${showGame ? 'hidden' : ''}`} src={play} alt="" />
       </div>
 
-      {showGame ? <Game counter={counter} setCounter={setCounter} quantity={quantity} setResult={setResult} setShowGame={setShowGame} /> : ''}
-      {result ? <Result counter={counter} quantity={quantity} /> : ''}
+      {showGame ? <Game counter={counter} setCounter={setCounter} quantity={quantity} hasResult={hasResult} setHasResult={setHasResult} /> : ''}
 
       <div className={`relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel || showGame ? 'hidden' : ''}`}>
         <button onClick={() => printCards(5)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-green-800 text-white shadow-lg cursor-pointer hover:scale-110'>Easy</button>
