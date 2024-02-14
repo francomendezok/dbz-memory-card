@@ -10,6 +10,8 @@ import audio from '../assets/music.mp3'
 import disco from '../assets/vinil.webp'
 import confuso from '../assets/confuso.webp'
 import space from '../assets/space.jpg'
+import winGIF from '../assets/goku-ssj3.gif'
+import loseGIF from '../assets/vegeta-rain.gif'
 import './style.css'
 import { useState, useEffect, useRef } from 'react';
 
@@ -105,10 +107,14 @@ const fetchData = async () => {
   }
 };
 
-function Result ({counter, quantity, state}) {
+function Result ({state}) {
     return (
-      <h1 className='absolute text-4xl z-50 text-slate-50'>{counter} + {quantity}</h1>
-      // result is not showing // 
+      <div className='w-1/3 flex flex-col justify-center items-center gap-8 absolute text-4xl z-50 text-slate-50'>
+        <h1 className='text-center'>You {state}</h1>
+        <img className='cursor-pointer rounded-lg hover:scale-105' src={state === 'Win 💪' ? winGIF : loseGIF} alt="" />
+        <h2 className='text-center'>Click the Dragon Ball Logo to go Back</h2>
+      </div>
+
     )
 }
 
@@ -139,8 +145,9 @@ function randomNumber () {
 function manageCard(position) {
   if (selected.includes(position)) {
     setHasResult('hidden')
-    setWin(true)
+    setLose(true)
   }
+  
   
     else {
     const selectedCopy = [...selected];
@@ -167,6 +174,13 @@ function manageCard(position) {
     setTimeout(function () {
       setAnimationClass('dbz-character');
     }, 2000);
+
+    if (selected.length + 1 === quantity) {
+      setTimeout(() => {
+        setHasResult('hidden')
+        setWin(true)      
+      }, 2200)
+    }
   }
 }
 
@@ -184,8 +198,8 @@ function manageCard(position) {
 
   return (
     <div className='space absolute w-screen h-screen flex items-center justify-center'>
-            {win ? <Result counter={counter} quantity={quantity} state={'win'} /> : ''}
-            {lose ? <Result counter={counter} quantity={quantity} state={'lose'} /> : ''}
+            {win ? <Result state={'Win 💪'} /> : ''}
+            {lose ? <Result state={'Lose 😔'} /> : ''}
       <div id='cards' className={`${hasResult} flex items-center justify-center w-full h-2/4`}>
         {imageElements}
         <h1 className='absolute bottom-32 text-4xl text-slate-100'> {counter} / {quantity}</h1>
@@ -235,12 +249,15 @@ function Menu () {
     setBgc(backgrounds[randomNumber])
     setLogoState(true)
     setShowGame(false)
+    setCounter(0)
+    setQuantity(1)
   }
 
   function printCards (number) {
     setQuantity(number)
     setBgc(space)
     setShowGame(true)
+    setHasResult('')
   }
 
 
