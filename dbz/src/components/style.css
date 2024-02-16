@@ -110,3 +110,68 @@ body, html {
     transform: rotateY(0deg);
   }
 }
+
+@media (max-width: 450px) {
+
+  .dbzLOGO {
+    top: 0;
+  }
+
+  .ballContainer {
+    display: flex;
+    flex-direction: column;
+    top: 4rem;
+    width: 90% !important;
+    height: 100% !important;
+  }
+
+  .clickToPlay {
+    width: 500px;
+    animation: none;
+  }
+
+  #dragonBall {
+    width: 100px;
+  }
+
+  .footer {
+    height: 120px !important;
+  }
+
+  .disco {
+    height: 80px !important;
+    width: 80px !important;
+  }
+
+  .instructionsContainer {
+    margin-right: 0.5rem !important;
+  }
+
+  .goten {
+    height: 80px !important;
+    width: 80px !important;  
+    margin-bottom: 0.5 !important;
+    margin-right: 0 !important;
+  }
+
+  .bulmaContainer {
+    bottom: 170px !important;  
+    margin: 0 !important;
+    width: 100% !important;
+  }
+
+  .bulma {
+    height: 70% !important;
+    margin-top: auto;
+  }
+
+  .bulmaCards {
+    display: flex;
+    flex-direction: column;
+    height: 100% !important;
+  }
+
+  .bulmaCards p {
+    font-size: 12px;
+  }
+}

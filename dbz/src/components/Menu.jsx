@@ -47,7 +47,7 @@ const AudioPlayer = () => {
       <img 
       onClick={handlePlayPause} 
       id='dancingImage'
-      className={`mt-auto h-32 w-32 hover:scale-110 cursor-pointer ${isPlaying ? 'dancing' : ''}`} 
+      className={`disco mt-auto h-32 w-32 hover:scale-110 cursor-pointer ${isPlaying ? 'dancing' : ''}`} 
       src={disco} 
       alt="Goku Vinyl"
        />
@@ -71,21 +71,21 @@ const Bulma = () => {
 
   return (
     <div className='instructionsContainer flex mr-10'>
-        <div className={`relative bottom-32 flex h-72 w-3/4 ${bulmaState}`}>
-          <img className='w-1/2 h-full' src={bulma} alt="" />
-          <div className='h-3/4 flex flex-col justify-evenly'>
+        <div className={`bulmaContainer relative bottom-32 flex h-72 w-3/4 ${bulmaState}`}>
+          <img className='bulma w-1/2 h-full' src={bulma} alt="" />
+          <div className='bulmaCards h-3/4 flex flex-col justify-evenly'>
             <p className='font-semibold rounded-lg p-2 bg-slate-200 text-center'>Don't click on the same card twice!</p>
             <p className='font-semibold rounded-lg p-2 bg-slate-200 text-center'>Click on the DBZ logo to go back.</p>
           </div>
         </div>
-        <img className='h-32 mt-auto mb-2 cursor-pointer hover:scale-110 ease-in-out' onClick={handleBulma} src={confuso} alt="" />    
+        <img className='goten h-32 mt-auto mb-2 cursor-pointer hover:scale-110 ease-in-out' onClick={handleBulma} src={confuso} alt="" />    
       </div>
   )
 }
 
 function Footer () {
   return (
-    <footer className='relative w-screen h-44 flex justify-between mt-auto'>
+    <footer className='footer relative w-screen h-44 flex justify-between mt-auto'>
       <AudioPlayer/>
       <Bulma />
   </footer>
@@ -179,7 +179,7 @@ function manageCard(position) {
       setTimeout(() => {
         setHasResult('hidden')
         setWin(true)      
-      }, 2200)
+      }, 2000)
     }
   }
 }
@@ -262,11 +262,11 @@ function Menu () {
 
 
   return (
-    <div className={`relative min-h-screen flex flex-col`}>
-      <img className={`absolute inset-0 w-full h-full object-cover z-0`} src={bgc} alt="" />
-      <img onClick={showMenu} className={`cursor-pointer relative h-1/2 w-1/2 z-10 bottom-24 mx-auto ${logoState ? '' : 'top-2 right-1/3 h-1/5 w-1/5'}`} src={logo} alt="" />
+    <div className={`mainContainer relative min-h-screen flex flex-col`}>
+      <img className={`bgc absolute inset-0 w-full h-full object-cover z-0`} src={bgc} alt="" />
+      <img onClick={showMenu} className={`dbzLOGO cursor-pointer relative h-1/2 w-1/2 z-10 bottom-24 mx-auto ${logoState ? '' : 'top-2 right-1/3 h-1/5 w-1/5'}`} src={logo} alt="" />
       
-      <div className={`relative z-0 w-1/3 h-32 bottom-24 flex justify-center gap-12 items-center m-auto ${logoState || showGame ? '' : 'hidden'}`}>
+      <div className={`ballContainer relative z-0 w-1/3 h-32 bottom-24 flex justify-center gap-12 items-center m-auto ${logoState || showGame ? '' : 'hidden'}`}>
         <img className={`clickToPlay ${showGame ? 'hidden' : ''}`} src={click} alt="" />
         <img onClick={playGame} id='dragonBall' className={`hover:scale-110 cursor-pointer w-24 ${showGame ? 'hidden' : ''}`} src={play} alt="" />
       </div>
