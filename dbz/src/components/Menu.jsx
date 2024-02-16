@@ -109,7 +109,7 @@ const fetchData = async () => {
 
 function Result ({state}) {
     return (
-      <div className='w-1/3 flex flex-col justify-center items-center gap-8 absolute text-4xl z-50 text-slate-50'>
+      <div className='resultBox w-1/3 flex flex-col justify-center items-center gap-8 absolute text-4xl z-50 text-slate-50'>
         <h1 className='text-center'>You {state}</h1>
         <img className='cursor-pointer rounded-lg hover:scale-105' src={state === 'Win 💪' ? winGIF : loseGIF} alt="" />
         <h2 className='text-center'>Click the Dragon Ball Logo to go Back</h2>
@@ -206,6 +206,7 @@ function manageCard(position) {
       </div>
     </div>
   );
+  // make it a grid to calc and use min-max and repeat // 
 }
 
 async function randomCharacters(amount) {
@@ -273,7 +274,7 @@ function Menu () {
 
       {showGame ? <Game counter={counter} setCounter={setCounter} quantity={quantity} hasResult={hasResult} setHasResult={setHasResult} /> : ''}
 
-      <div className={`relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel || showGame ? 'hidden' : ''}`}>
+      <div className={`buttonsDifficulty relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel || showGame ? 'hidden' : ''}`}>
         <button onClick={() => printCards(5)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-green-800 text-white shadow-lg cursor-pointer hover:scale-110'>Easy</button>
         <button onClick={() => printCards(7)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-orange-800 text-white shadow-lg cursor-pointer hover:scale-110'>Medium</button>
         <button onClick={() => printCards(10)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-red-800 text-white shadow-lg cursor-pointer hover:scale-110'>Hard</button>
