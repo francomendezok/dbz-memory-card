@@ -288,3 +288,19 @@ body, html {
     max-width: 100%;
   }
 }
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.toBlink {
+  animation: blink 1s infinite;
+}
