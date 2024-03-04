@@ -12,6 +12,7 @@ import confuso from '../assets/confuso.webp'
 import space from '../assets/space.jpg'
 import winGIF from '../assets/goku-ssj3.gif'
 import loseGIF from '../assets/vegeta-rain.gif'
+import kaio from '../assets/kaio.gif'
 import './style.css'
 import { useState, useEffect, useRef } from 'react';
 
@@ -135,6 +136,7 @@ function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
     };
 
     getRandomCharacters();
+
   }, [quantity]);
 
 function randomNumber () {
@@ -147,6 +149,7 @@ function manageCard(position) {
     setHasResult('hidden')
     setLose(true)
   }
+  
   
   
     else {
@@ -206,7 +209,6 @@ function manageCard(position) {
       </div>
     </div>
   );
-  // make it a grid to calc and use min-max and repeat // 
 }
 
 async function randomCharacters(amount) {
@@ -227,6 +229,14 @@ async function randomCharacters(amount) {
 
 const fetchedCharacters = await fetchData();
 
+function Loading () {
+  return (
+    <div className='top-44 left-32 absolute'>
+      <img className='m-auto w-3/5 h-3/5 rounded-lg' src={kaio} alt="" />
+      <h2 className='relative text-2xl text-slate-50 text-center mt-4'>Loading ...</h2>
+    </div>
+  )
+}
 
 function Menu () {
   const randomNumber = Math.floor(Math.random() * 3);
@@ -237,6 +247,8 @@ function Menu () {
   const [quantity, setQuantity] = useState(1)
   const [counter, setCounter] = useState(0)
   const [hasResult, setHasResult] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [loadingDone, setLoadingDone] = useState(false)
 
 
 
@@ -257,8 +269,11 @@ function Menu () {
   function printCards (number) {
     setQuantity(number)
     setBgc(space)
-    setShowGame(true)
-    setHasResult('')
+    setLoading(true)
+    setLoadingDone(true)
+    // setLoading(false)
+    // setShowGame(true)
+    // setHasResult('')
   }
 
 
@@ -273,8 +288,8 @@ function Menu () {
       </div>
 
       {showGame ? <Game counter={counter} setCounter={setCounter} quantity={quantity} hasResult={hasResult} setHasResult={setHasResult} /> : ''}
-
-      <div className={`buttonsDifficulty relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel || showGame ? 'hidden' : ''}`}>
+      {loading ? <Loading/> : ''}
+      <div className={`buttonsDifficulty relative z-0 w-1/2 h-32 flex justify-evenly gap-12 items-center m-auto ${!chooseLevel || showGame || loadingDone ? 'hidden' : ''}`}>
         <button onClick={() => printCards(5)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-green-800 text-white shadow-lg cursor-pointer hover:scale-110'>Easy</button>
         <button onClick={() => printCards(7)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-orange-800 text-white shadow-lg cursor-pointer hover:scale-110'>Medium</button>
         <button onClick={() => printCards(10)} style={{fontFamily:'Saiyan'}} className='p-6 rounded-md text-6xl bg-red-800 text-white shadow-lg cursor-pointer hover:scale-110'>Hard</button>
