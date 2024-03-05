@@ -140,14 +140,24 @@ function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
 
   useEffect(() => {
     const getRandomCharacters = async () => {
-      const charactersData = await randomCharacters(quantity);
+      let charactersData = await randomCharacters(quantity);
+      
+     
+        while (charactersData.some(char => char === undefined)) {
+          charactersData = await randomCharacters(quantity);
+        }
+      
       setCharacters(charactersData);
     };
-    
     getRandomCharacters();
-    setLoading(false)
+
+    setTimeout(function () {
+      setLoading(false)
+    }, 1234)
     
   }, [quantity]);
+  console.log(characters);
+
 
 
 function randomNumber () {
