@@ -126,16 +126,13 @@ function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
   const [selected, setSelected] = useState([]);
   const [win, setWin] = useState(false)
   const [lose, setLose] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [loadingDone, setLoadingDone] = useState(false)
+  const [loadState, setLoading] = useState(true)
 
   function Loading () {
     return (
-      <div className='top-44 left-32 absolute'>
-        <img className='m-auto w-3/5 h-3/5 rounded-lg' src={kaio} alt="" />
-        <div className='flex justify-center'>
-          <span className='toBlink relative text-2xl text-slate-50 text-center mt-4'>Loading ... </span>
-        </div>
+      <div className='flex flex-col items-center justify-center m-auto absolut'>
+        <img className='m-auto w-1/3 rounded-lg' src={kaio} alt="" />
+        <h2 className='toBlink relative text-3xl text-slate-50 text-center mt-4'>Loading ... </h2>
       </div>
     )
   }
@@ -148,6 +145,7 @@ function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
     };
     
     getRandomCharacters();
+    setLoading(false)
     
   }, [quantity]);
 
@@ -211,13 +209,13 @@ function manageCard(position) {
       <img src={character.image} alt={`Card ${index + 1}`} />
     </div>
   ));
-
+ 
   return (
     <div className='space absolute w-screen h-screen flex items-center justify-center'>
             {win ? <Result state={'Win 💪'} /> : ''}
             {lose ? <Result state={'Lose 😔'} /> : ''}
       <div id='cards' className={`${hasResult} flex items-center justify-center w-full h-2/4`}>
-        {imageElements}
+        {loadState ? <Loading /> : imageElements}
         <h1 className='absolute bottom-32 text-4xl text-slate-100'> {counter} / {quantity}</h1>
       </div>
     </div>
