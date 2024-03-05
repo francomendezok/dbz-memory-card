@@ -156,7 +156,6 @@ function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
     }, 1234)
     
   }, [quantity]);
-  console.log(characters);
 
 
 
