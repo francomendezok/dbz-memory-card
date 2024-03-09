@@ -213,14 +213,37 @@ body, html {
   }
 
   #cards {
-    height: 70%;
+    height: 60%;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    flex-wrap: wrap;
+    margin-bottom: 10rem;
+  }
+
+  #cards h1 {
+    bottom: 2rem;
   }
 
   #cards div {
     display: flex;
     flex-wrap: wrap !important;
-    height: 50%;
+    height: 30%;
     max-width: 100%;
+  }
+
+  #cards div img {
+    width: 50%;
+  }
+
+  .loadingContainer {
+    top: 3rem !important;
+    height: 100% !important;
+  }
+
+  .loadingContainer img {
+    margin-bottom: 0;
+    width: 80% !important;
   }
 }
 

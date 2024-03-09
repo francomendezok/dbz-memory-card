@@ -130,7 +130,7 @@ function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
 
   function Loading () {
     return (
-      <div className='flex flex-col items-center justify-center m-auto absolut'>
+      <div className='loadingContainer flex flex-col items-center justify-center m-auto absolut'>
         <img className='m-auto w-1/3 rounded-lg' src={kaio} alt="" />
         <h2 className='toBlink relative text-3xl text-slate-50 text-center mt-4'>Loading ... </h2>
       </div>
@@ -151,9 +151,9 @@ function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
     };
     getRandomCharacters();
 
-    setTimeout(function () {
-      setLoading(false)
-    }, 1234)
+    // setTimeout(function () {
+    //   setLoading(false)
+    // }, 1234)
     
   }, [quantity]);
 
