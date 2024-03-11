@@ -145,7 +145,7 @@ body, html {
   .ballContainer {
     display: flex;
     flex-direction: column;
-    top: 4rem;
+    top: 5rem;
     width: 90% !important;
     height: 100% !important;
   }
@@ -166,7 +166,7 @@ body, html {
   .footer {
     height: 120px !important;
     position: absolute;
-    bottom: 15rem;
+    bottom: 2rem;
   }
 
   .disco {
@@ -219,15 +219,17 @@ body, html {
   }
 
   #cards {
-    height: 60%;
+    height: 70%;
     width: 100%;
     display: flex;
-    align-items: flex-end;
     flex-wrap: wrap;
-    margin-bottom: 10rem;
+    padding-bottom: auto;
+    position: relative;
+    bottom: 5rem;
   }
 
   #cards h1 {
+    position: relative;
     bottom: 2rem;
   }
 
@@ -239,7 +241,7 @@ body, html {
   }
 
   #cards div img {
-    width: 50%;
+    width: 70%;
   }
 
   .loadingContainer {

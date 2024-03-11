@@ -151,9 +151,9 @@ function Game({ counter, setCounter, quantity, setHasResult, hasResult }) {
     };
     getRandomCharacters();
 
-    // setTimeout(function () {
-    //   setLoading(false)
-    // }, 1234)
+    setTimeout(function () {
+      setLoading(false)
+    }, 1234)
     
   }, [quantity]);
 
