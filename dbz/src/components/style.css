@@ -153,14 +153,20 @@ body, html {
   .clickToPlay {
     width: 500px;
     animation: none;
+    position: absolute;
+    bottom: 15rem;
   }
 
   #dragonBall {
+    position: absolute;
+    bottom: 5rem;
     width: 100px;
   }
 
   .footer {
     height: 120px !important;
+    position: absolute;
+    bottom: 15rem;
   }
 
   .disco {
@@ -237,12 +243,12 @@ body, html {
   }
 
   .loadingContainer {
-    top: 3rem !important;
-    height: 100% !important;
+    height: 60% !important;
+    margin-top: 1rem !important;
   }
 
   .loadingContainer img {
-    margin-bottom: 0;
+    margin: auto;
     width: 80% !important;
   }
 }
