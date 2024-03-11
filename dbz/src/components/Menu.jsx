@@ -231,9 +231,13 @@ function manageCard(position) {
   );
 }
 
+
+
 async function randomCharacters(amount) {
   let positions = [];
   let selectedIndexes = new Set();
+  const fetchedCharacters = await fetchData();
+
 
   while (positions.length < amount) {
     let index = Math.floor(Math.random() * 59);
@@ -246,7 +250,6 @@ async function randomCharacters(amount) {
   return positions;
 }
 
-const fetchedCharacters = await fetchData();
 
 
 
